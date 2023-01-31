@@ -1,0 +1,172 @@
+<!DOCTYPE html><!--Define la version de usado-->
+
+
+<html lang="es"> <!--idioma para que el navegador sepa que idioma es el que se esta usando y traduzca el texto-->
+
+    <head> <!--etiquetas informativas-->
+
+        <meta charset="UTF-8"><!--Diccionario uso de caracteres especiales-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--Define el ancho de la pagina ajustado al dispositivo-->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!--Define el modo de compatibilidad con el navegador-->
+        <title>Challenge ONE Decodificador de texto</title><!--titulo de la pagina-->
+        <link rel="stylesheet" href="style.css"><!--enlace a la hoja de estilo-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+
+    <body><!--etiquetas de contenido--> 
+
+        <header><!--etiqueta de encabezado-->
+            <h1>Decodificador de texto</h1><!--imagen del logo-->
+        </header>
+
+        <main><!--etiqueta de contenido principal-->
+            <section class="izquierda"> <!--area de texto-->
+                <textarea class="textarea1" cols="30" rows="10" placeholder="Ingrese el texto aqui" autofocus=""></textarea>
+                <div> <!--mensaje de advertencia-->
+                    <h6 class="informacion"><img id="exclamacion" src="imagenes/exclamacion.svg"> Solo letras minúsculas y sin acentos</h6>
+                </div>
+                <div class="botones">
+                    <button class="btn-encriptar" onclick="btnEncriptar()">Encriptar</button>
+                    <button class="btn-desencriptar" onclick="btnDesencriptar()">Desencriptar</button>
+                </div>
+            </section>
+                
+
+            <section class="sectionMensaje"> <!--area de mensaje-->
+                <textarea class="mensaje" cols="20" rows="13" disabled>
+                    
+                </textarea>
+                <div class="botones2">
+                    <button class="btn-copiar" style="display:none" onclick="Copiar()">Copiar</button>
+                    <button class="btn-limpiar" style="display:none" onclick="Limpiar()">Limpiar</button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="creador">
+                <p>Creado y diseñado por Edinson Perdomo</p> 
+            </div>
+            <div class="redesSociales">
+                <a href="https://github.com/EdiPerdomo93" class="fa fa-github" target="_blank"></a>
+                <a href="https://www.linkedin.com/in/edinsonperdomo/" class="fa fa-linkedin" target="_blank"></a>
+                
+            </div>
+
+        </footer>
+        
+    <script>
+
+        const textarea1 = document.querySelector('.textarea1'); // almacena en la variable Selecciona el elemento textarea del HTML
+        const mensaje = document.querySelector('.mensaje'); // almacena en la variable Selecciona el elemento mensaje del HTML
+        const btnCopiar = document.querySelector('.btn-copiar'); // almacena en la variable Selecciona el elemento btnCopiar del HTML
+        const btnLimpiar = document.querySelector('.btn-limpiar'); // almacena en la variable Selecciona el elemento btnLimpiar del HTML
+        // A letra "e" é convertida para "enter"
+        // A letra "i" é convertida para "imes"
+        // A letra "a" é convertida para "ai"
+        // A letra "o" é convertida para "ober"
+        // A letra "u" é convertida para "ufat"
+
+        function btnEncriptar() {
+
+            if(textarea1.value == ""){ // Verifica si el textarea esta vacio
+                alert("Ingrese un texto"); // Muestra un mensaje de alerta
+                return; // Sale de la funcion
+
+            } else { // Si el textarea no esta vacio
+                const texto = textarea1.value; // Almacena el texto ingresado en el textarea en una constante llamada texto
+                const textoEncriptado = encriptar(texto); // Almacena el texto encriptado
+                mensaje.value = textoEncriptado; // Muestra el texto encriptado en el textarea
+                textarea1.value = ""; // Limpia el textarea
+                mensaje.style.backgroundImage = "none"; // Elimina el fondo del textarea
+                btnCopiar.style.display = "inline"; // Muestra el boton copiar
+                btnLimpiar.style.display = "inline"; // Muestra el boton limpiar
+            }
+            
+            
+        }
+
+        
+        function encriptar(stringEncriptado){
+            let matrizCodigo = [["e", "enter"], ["i", "imes"], ["a", "ai"], ["o", "ober"], ["u", "ufat"]]; // Matriz que almacena las letras a convertir y su equivalente
+            stringEncriptado = stringEncriptado.toLowerCase(); // Convierte el texto a minusculas
+
+            for(let i = 0; i < matrizCodigo.length; i++){ // Recorre la matriz
+
+                if(stringEncriptado.includes(matrizCodigo[i][0])){ // Verifica si el texto contiene la letra a convertir (matrizCodigo[i][0
+                    stringEncriptado = stringEncriptado.replaceAll(matrizCodigo[i][0], matrizCodigo[i][1]); // Reemplaza la letra por el codigo equivalente
+                }
+            }
+            return stringEncriptado; // Retorna el texto encriptado
+
+        }
+
+
+
+        function btnDesencriptar() {
+
+            if(textarea1.value == ""){ // Verifica si el textarea esta vacio
+                alert("Ingrese un texto"); // Muestra un mensaje de alerta
+                return; // Sale de la funcion
+
+            } else { // Si el textarea no esta vacio
+                const texto = textarea1.value; // Almacena el texto ingresado en el textarea en una constante llamada texto
+                const textoDesencriptado = desencriptar(texto); // Almacena el texto encriptado
+                mensaje.value = textoDesencriptado; // Muestra el texto encriptado en el textarea
+                textarea1.value = ""; // Limpia el textarea
+                mensaje.style.backgroundImage = "none"; // Elimina el fondo del textarea
+                btnCopiar.style.display = "inline"; // Muestra el boton copiar
+                btnLimpiar.style.display = "inline"; // Muestra el boton limpiar
+            }
+            
+            
+        }
+
+        function desencriptar(stringDesencriptado){
+            let matrizCodigo = [["e", "enter"], ["i", "imes"], ["a", "ai"], ["o", "ober"], ["u", "ufat"]]; // Matriz que almacena las letras a convertir y su equivalente
+            stringDesencriptado = stringDesencriptado.toLowerCase(); // Convierte el texto a minusculas
+
+            for(let i = 0; i < matrizCodigo.length; i++){ // Recorre la matriz
+
+                if(stringDesencriptado.includes(matrizCodigo[i][1])){ // Verifica si el texto contiene la letra a convertir (matrizCodigo[i][0
+                    stringDesencriptado = stringDesencriptado.replaceAll(matrizCodigo[i][1], matrizCodigo[i][0]); // Reemplaza la letra por el codigo equivalente
+                }
+            }
+            return stringDesencriptado; // Retorna el texto encriptado
+
+        }
+
+        function Limpiar() {
+            textarea1.value = ""; // Limpia el textarea
+            mensaje.value = ""; // Limpia el textarea
+            mensaje.style.backgroundImage = "url(imagenes/Dibujo.png)"; // Agrega el fondo al textarea
+            btnCopiar.style.display = "none"; // Oculta el boton copiar
+            btnLimpiar.style.display = "none"; // Oculta el boton limpiar
+           
+        }
+
+
+        function Copiar() {
+            let Copy = document.querySelector('.mensaje'); // almacena en la variable Selecciona el elemento mensaje del HTML
+            Copy.select(); // Selecciona el texto del textarea
+            navigator.clipboard.writeText(Copy.value); // Copia el texto seleccionado
+            
+
+            alert("Texto copiado"); // Muestra un mensaje de alerta
+                
+            
+                    
+        }
+
+
+
+
+
+    </script>
+
+    </body>
+
+</html>
