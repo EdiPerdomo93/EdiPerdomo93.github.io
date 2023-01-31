@@ -83,7 +83,7 @@
 
   .mensaje{
     background: #FFFFFF ;
-    background-image: url(imagenes/Dibujo.png);
+    background-image: url(Imagenes/Dibujo.png);
     background-size: 100%; /* ajusta el tamaño de la imagen al tamaño del textarea */
     background-position-x: center;
     background-position-y: 40%;
